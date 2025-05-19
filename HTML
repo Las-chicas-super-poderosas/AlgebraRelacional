@@ -1,0 +1,53 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="Relacional.WebForm1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <p>
+                <h2>Consultas de Selección</h2>
+                <asp:Button ID="btnConsulta1" runat="server" Text="Mostrar todos los productos" OnClick="btnConsulta1_Click" />
+                <asp:Button ID="btnConsulta2" runat="server" Text="Productos con precio > 100" OnClick="btnConsulta2_Click" />
+                <asp:Button ID="btnConsulta3" runat="server" Text="Productos con stock = 0" OnClick="btnConsulta3_Click" /> <br /> <br />
+                <h2>Consultas de Proyección</h2>
+                <asp:Button ID="btnProyeccion1" runat="server" Text="Nombres y Precios de Productos" OnClick="btnProyeccion1_Click" />
+                <asp:Button ID="btnProyeccion2" runat="server" Text="Categorías: Código y Nombre" OnClick="btnProyeccion2_Click" />
+                <asp:Button ID="btnProyeccion3" runat="server" Text="Vendedores: Apellidos y Nombres" OnClick="btnProyeccion3_Click" /> <br /> <br />
+                <h2>Renombramiento</h2>
+                <asp:Button ID="btnRenombramiento1" runat="server" Text="Productos (Nombre como 'Producto', Precio como 'Costo')" OnClick="btnRenombramiento1_Click" /> 
+                <asp:Button ID="btnRenombramiento2" runat="server" Text="Clientes (Apellidos y Dirección)" OnClick="btnRenombramiento2_Click" />
+                <asp:Button ID="btnRenombramiento3" runat="server" Text="Boletas (Número y Fecha)" OnClick="btnRenombramiento3_Click" />
+               
+            </p>
+            
+            <h1>Operaciones Binarias</h1>
+            <p> 
+                <h2>Unión</h2>
+                <asp:Button ID="btnUnion1" runat="server" Text="Productos con Stock > 50 o Precio > 100" OnClick="btnUnion1_Click" />
+                <asp:Button ID="btnUnion2" runat="server" Text="Vendedores con Apellido A o B" OnClick="btnUnion2_Click" />
+                <asp:Button ID="btnUnion3" runat="server" Text="Categorías con 'a' o 'e'" OnClick="btnUnion3_Click" />
+                <br /><br />
+                <h2>Diferencia</h2>
+                <asp:Button ID="btnDiferencia1" runat="server" Text="Productos con Stock diferente de 0" OnClick="btnDiferencia1_Click" />
+                <asp:Button ID="btnDiferencia2" runat="server" Text="Clientes sin boleta" OnClick="btnDiferencia2_Click" />
+                <asp:Button ID="btnDiferencia3" runat="server" Text="Vendedores sin boleta" OnClick="btnDiferencia3_Click" />
+                <br /><br />
+                <h2>Producto Cartesiano</h2>
+                <asp:Button ID="btnProducto1" runat="server" Text="Cliente x Vendedor" OnClick="btnProducto1_Click" />
+                <asp:Button ID="btnProducto2" runat="server" Text="Producto x Categoría" OnClick="btnProducto2_Click" />
+                <asp:Button ID="btnProducto3" runat="server" Text="Vendedor x Boleta" OnClick="btnProducto3_Click" />
+                 <br />
+                  <br />
+                 <asp:GridView ID="gvConsulta" runat="server" AutoGenerateColumns="true" OnSelectedIndexChanged="gvConsulta_SelectedIndexChanged"></asp:GridView>
+            </p>
+
+        </div>
+    </form>
+</body>
+</html>
