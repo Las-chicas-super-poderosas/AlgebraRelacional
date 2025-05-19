@@ -1,0 +1,256 @@
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Relacional
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnConsulta1_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from P in ventas.TProducto
+                           select P;
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+
+        }
+        protected void btnConsulta2_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from O in ventas.TCategoria
+                           where O.Nombre == "Calzado"
+                           select O;
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+
+        protected void btnConsulta3_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from P in ventas.TVendedor
+                           where P.CodVendedor == "V0001"
+                           select P;
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+
+        protected void btnProyeccion1_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from P in ventas.TProducto
+                           select new { P.Nombre, P.Precio };
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnProyeccion2_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from C in ventas.TCategoria
+                           select new { C.CodCategoria, C.Nombre };
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnProyeccion3_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from V in ventas.TVendedor
+                           select new { V.Apellidos, V.Nombres };
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+
+        protected void btnRenombramiento1_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from P in ventas.TProducto
+                           select new
+                           {
+                               Producto = P.Nombre,
+                               Costo = P.Precio
+                           };
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnRenombramiento2_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from C in ventas.TCliente
+                           select new
+                           {
+                               Cliente = C.Apellidos,
+                               Ubicacion = C.Direccion
+                           };
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnRenombramiento3_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta = from B in ventas.TBoleta
+                           select new
+                           {
+                               Numero = B.NroBoleta,
+                               FechaDeEmision = B.Fecha
+                           };
+
+            gvConsulta.DataSource = consulta.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnUnion1_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta1 = from P in ventas.TProducto
+                            where P.Stock > 50
+                            select new { P.Nombre };
+
+            var consulta2 = from P in ventas.TProducto
+                            where P.Precio > 100
+                            select new { P.Nombre };
+
+            var union = consulta1.Union(consulta2);
+            gvConsulta.DataSource = union.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnUnion2_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta1 = from V in ventas.TVendedor
+                            where V.Apellidos.StartsWith("A")
+                            select new { V.Nombres };
+
+            var consulta2 = from V in ventas.TVendedor
+                            where V.Apellidos.StartsWith("B")
+                            select new { V.Nombres };
+
+            var union = consulta1.Union(consulta2);
+            gvConsulta.DataSource = union.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnUnion3_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var consulta1 = from C in ventas.TCategoria
+                            where C.Nombre.Contains("a")
+                            select new { C.Nombre };
+
+            var consulta2 = from C in ventas.TCategoria
+                            where C.Nombre.Contains("e")
+                            select new { C.Nombre };
+
+            var union = consulta1.Union(consulta2);
+            gvConsulta.DataSource = union.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnDiferencia1_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var todos = from P in ventas.TProducto
+                        select new { P.Nombre };
+
+            var sinStock = from P in ventas.TProducto
+                           where P.Stock == 0
+                           select new { P.Nombre };
+
+            var diferencia = todos.Except(sinStock);
+            gvConsulta.DataSource = diferencia.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnDiferencia2_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var todos = from C in ventas.TCliente
+                        select new { C.Apellidos };
+
+            var conBoleta = from B in ventas.TBoleta
+                            join C in ventas.TCliente on B.CodCliente equals C.CodCliente
+                            select new { C.Apellidos };
+
+            var diferencia = todos.Except(conBoleta);
+            gvConsulta.DataSource = diferencia.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnDiferencia3_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var todos = from V in ventas.TVendedor
+                        select new { V.Apellidos };
+
+            var conBoleta = (from B in ventas.TBoleta
+                             join V in ventas.TVendedor on B.CodVendedor equals V.CodVendedor
+                             select new { V.Apellidos }).Distinct();
+
+            var diferencia = todos.Except(conBoleta);
+            gvConsulta.DataSource = diferencia.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnProducto1_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var producto = from C in ventas.TCliente
+                           from V in ventas.TVendedor
+                           select new { Cliente = C.Nombres, Vendedor = V.Nombres };
+
+            gvConsulta.DataSource = producto.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnProducto2_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var producto = from P in ventas.TProducto
+                           from C in ventas.TCategoria
+                           select new { Producto = P.Nombre, Categoria = C.Nombre };
+
+            gvConsulta.DataSource = producto.ToList();
+            gvConsulta.DataBind();
+        }
+
+        protected void btnProducto3_Click(object sender, EventArgs e)
+        {
+            BDVentasEntities ventas = new BDVentasEntities();
+            var producto = from V in ventas.TVendedor
+                           from B in ventas.TBoleta
+                           select new { Vendedor = V.Apellidos, NroBoleta = B.NroBoleta };
+
+            gvConsulta.DataSource = producto.ToList();
+            gvConsulta.DataBind();
+        }
+
+
+        protected void gvConsulta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
